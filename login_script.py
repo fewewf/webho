@@ -2,6 +2,8 @@ from playwright.sync_api import sync_playwright
 import os
 import requests
 
+
+
 def send_telegram_message(message):
     bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     chat_id = os.environ.get('TELEGRAM_CHAT_ID')
@@ -11,8 +13,13 @@ def send_telegram_message(message):
         "text": message,
         "parse_mode": "Markdown"
     }
-    response = requests.post(url, json=payload)
-    return response.json()
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        print("消息已成功发送到Telegram。")
+    except requests.RequestException as e:
+        print(f"发送Telegram消息失败: {e}")
+
 
 def login_koyeb(email, password):
     with sync_playwright() as p:
