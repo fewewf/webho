@@ -1,0 +1,6 @@
+name = "webho"
+main = "_worker.js"
+
+
+compatibility_date = "2025-04-01"
+workers_dev = true
